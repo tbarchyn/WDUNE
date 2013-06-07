@@ -87,7 +87,6 @@ int main(int nArgs, char *pszArgs[])
     Output files:
     1) 'surf.txt': integer space separated grid of output surface slab heights (overwrites input)
     */
-	/*
 	numIterations = atoi (pszArgs[1]);
 	wdir = atoi (pszArgs[2]);
 	depjump = atoi (pszArgs[3]);
@@ -99,7 +98,6 @@ int main(int nArgs, char *pszArgs[])
 	bound_type = atoi (pszArgs[9]);
 	newSandCode = atoi (pszArgs[10]);
 	newSandSlabs = atoi (pszArgs[11]);
-	*/	
 	
     // A) initialize
     init_wdune();
