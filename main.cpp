@@ -100,8 +100,6 @@ int main(int nArgs, char *pszArgs[])
 	newSandCode = atoi (pszArgs[10]);
 	newSandSlabs = atoi (pszArgs[11]);
 	*/	
-	// if input variables are not supplied, operate the program with basic inputs
-	set_default_params();
 	
     // A) initialize
     init_wdune();
