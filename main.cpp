@@ -53,12 +53,13 @@ assistance if you wish to extend the program (tom.barchyn@uleth.ca).
 using namespace std;
 
 // include the program as header file
-#include "mersenne_twister.h"     // include the random number generator: Mersenne Twister
-#include "wdune_globals.hpp"      // global variables
-#include "wdune_functions.hpp"    // IRF function definitions
-#include "wdune_irfs.hpp"         // core functions, called by the IRF functions
-#include "wdune_acc.hpp"          // accessory functions
-
+#include "mersenne_twister.h"     		// include the random number generator: Mersenne Twister
+#include "wdune_globals.hpp"      		// global variables
+#include "wdune_analysis.hpp"	  		// analysis functions
+#include "wdune_functions.hpp"    		// IRF function definitions
+#include "wdune_irfs.hpp"         		// core functions, called by the IRF functions
+#include "wdune_acc.hpp"          		// accessory functions
+//#include "wdune_default_params.hpp"		// a basic default parameter file for debugging purposes
 
 int main(int nArgs, char *pszArgs[])
 {
@@ -86,19 +87,22 @@ int main(int nArgs, char *pszArgs[])
     Output files:
     1) 'surf.txt': integer space separated grid of output surface slab heights (overwrites input)
     */
-
-    numIterations = atoi (pszArgs[1]);
-    wdir = atoi (pszArgs[2]);
-    depjump = atoi (pszArgs[3]);
-    psand = atof (pszArgs[4]);
-    pnosand = atof (pszArgs[5]);
-    dropdist = atof (pszArgs[6]);
-    nrows = atoi (pszArgs[7]);
-    ncols = atoi (pszArgs[8]);
-    bound_type = atoi (pszArgs[9]);
-    newSandCode = atoi (pszArgs[10]);
-    newSandSlabs = atoi (pszArgs[11]);
-
+	/*
+	numIterations = atoi (pszArgs[1]);
+	wdir = atoi (pszArgs[2]);
+	depjump = atoi (pszArgs[3]);
+	psand = atof (pszArgs[4]);
+	pnosand = atof (pszArgs[5]);
+	dropdist = atof (pszArgs[6]);
+	nrows = atoi (pszArgs[7]);
+	ncols = atoi (pszArgs[8]);
+	bound_type = atoi (pszArgs[9]);
+	newSandCode = atoi (pszArgs[10]);
+	newSandSlabs = atoi (pszArgs[11]);
+	*/	
+	// if input variables are not supplied, operate the program with basic inputs
+	set_default_params();
+	
     // A) initialize
     init_wdune();
 
@@ -107,7 +111,7 @@ int main(int nArgs, char *pszArgs[])
     {
         // run, called every timestep
         run_wdune();
-        timePrinter();
+		timePrinter();
         t++;
     }
 

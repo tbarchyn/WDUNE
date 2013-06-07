@@ -641,13 +641,19 @@ void avalanche_up(int i, int j)     // avalanche up (called after picking up a s
         }
         while (!avidir[avi_final]);               // repeat until the direction is suitable for avalanche
 
-        // move slab
-        // move slab from the north
-        if (avi_final == 0)
+        // move slabs	
+		// move slab from the north
+		if (avi_final == 0)
         {
-            surf[i][j]++;               // add the slab of sand that avalanches
-            i = i_n[i];                 // reset the focal coordinates
-            surf[i][j]--;               // subtract the slab of sand
+			surf[i][j]++;               // add the slab of sand that avalanches
+			i = i_n[i];                 // reset the focal coordinates
+			
+			// ------------------------------------------------------------------------------
+			// Analysis add-in: slablogger
+			wdune_slablogger.increment_avi(i, j, 2);	// moving slab to the south
+			// ------------------------------------------------------------------------------
+
+			surf[i][j]--;               // subtract the slab of sand
             avalanche_up (i, j);        // call the function recursively
         }
         // move slab from the south
@@ -655,7 +661,13 @@ void avalanche_up(int i, int j)     // avalanche up (called after picking up a s
         {
             surf[i][j]++;               // add the slab of sand that avalanches
             i = i_s[i];                 // reset the focal coordinates
-            surf[i][j]--;               // subtract the slab of sand
+            			
+			// ------------------------------------------------------------------------------
+			// Analysis add-in: slablogger
+			wdune_slablogger.increment_avi(i, j, 1);	// moving slab to the north
+			// ------------------------------------------------------------------------------
+
+			surf[i][j]--;               // subtract the slab of sand
             avalanche_up (i, j);        // call the function recursively
         }
         // move slab from the east
@@ -663,7 +675,13 @@ void avalanche_up(int i, int j)     // avalanche up (called after picking up a s
         {
             surf[i][j]++;               // add the slab of sand that avalanches
             j = j_e[j];                 // reset the focal coordinates
-            surf[i][j]--;               // subtract the slab of sand
+            
+			// ------------------------------------------------------------------------------
+			// Analysis add-in: slablogger
+			wdune_slablogger.increment_avi(i, j, 4);	// moving slab to the west
+			// ------------------------------------------------------------------------------
+			
+			surf[i][j]--;               // subtract the slab of sand
             avalanche_up (i, j);        // call the function recursively
         }
         // move slab from the west
@@ -671,7 +689,13 @@ void avalanche_up(int i, int j)     // avalanche up (called after picking up a s
         {
             surf[i][j]++;               // add the slab of sand that avalanches
             j = j_w[j];                 // reset the focal coordinates
-            surf[i][j]--;               // subtract the slab of sand
+
+			// ------------------------------------------------------------------------------
+			// Analysis add-in: slablogger
+			wdune_slablogger.increment_avi(i, j, 3);	// moving slab to the east
+			// ------------------------------------------------------------------------------
+
+			surf[i][j]--;               // subtract the slab of sand
             avalanche_up (i, j);        // call the function recursively
         }
     }
@@ -722,6 +746,12 @@ void avalanche_down(int i, int j)   // avalanche down (called after placing a sl
         while (!avidir[avi_final]);         // repeat until the direction is suitable for avalanche
 
         // move the sand
+
+		// ------------------------------------------------------------------------------
+		// Analysis add-in: slablogger
+		wdune_slablogger.increment_avi(i, j, (avi_final + 1));
+		// ------------------------------------------------------------------------------
+
         // move slab to the north
         if (avi_final == 0)
         {
@@ -901,15 +931,22 @@ void picksite_depo(int i, int j)    // pick a site to deposit
     bool foundSite = false;         // set flag denoting whether a site has been found
     while (!foundSite)
     {
-        // if i or j is toxic, break the loop immediately, the site is off the model space
+        // ------------------------------------------------------------------------
+		// Slablogger analysis add-in: call before moving coordinates!
+		wdune_slablogger.increment_trans(i, j);
+		// ------------------------------------------------------------------------
+		
+		// if i or j is toxic, break the loop immediately, the site is off the model space
         if (i == i_toxic || j == j_toxic)
         {
             i_depo = i; j_depo = j;
             break;
         }
-        // reset i and j with the deposition lookup
+
+		// reset i and j with the deposition lookup (move downwind)
         i = i_dp[i]; j = j_dp[j];
-        // calculate the probability of depositing
+        		
+		// calculate the probability of depositing
         if (surf[i][j] < shad[i][j])
         {
             probCut = 1.0;

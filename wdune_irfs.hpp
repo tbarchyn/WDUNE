@@ -100,9 +100,10 @@ void init_wdune()  // initialization
     if (bound_type == 2) { periodic_bounds(); }
     if (bound_type == 3) { nonperiodic_bounds_EW(); }
     if (bound_type == 4) { nonperiodic_bounds_NS(); }
-
+	
     init_shadupdate();      // update the shadow for the first time
-
+	init_analysis();		// initialize any analysis functions
+	
     cout << "Initialization complete . . entering time loop" << endl;
 }
 
@@ -122,6 +123,7 @@ void run_wdune()   // run
         t_poll++;                           // advance the poll counter
     }
     newSandEngine();                        // add some new sand if required
+	analyze_wdune();						// operate any analysis at end of iteration
 }
 
 void final_wdune()     // finalization
@@ -143,7 +145,7 @@ void final_wdune()     // finalization
         fprintf (pSurf, "%s", "\n");    // endline character
     }
     fclose (pSurf);
-
+	final_analysis();					// clean up any analysis functions
     cout << "Finalization complete" << endl;
 }
 

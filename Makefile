@@ -1,6 +1,5 @@
-# Makefile for compiling in Linux
+# Makefile
 
 make: main.cpp
-	g++ main.cpp -Wall -pedantic -O1 -o wdune_core_linux.exe
-	cp ./wdune_core_linux.exe ../core/wdune_core_linux.exe
+	g++ main.cpp -Wall -pedantic -O1 -o wdune_core.exe
 	
