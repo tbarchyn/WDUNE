@@ -154,7 +154,7 @@ class slablogger {
 				if (i_dp[ff] == i_toxic) {
 					i_dp_flux[ff] = 1;
 				}
-				if ((i_dp[ff] - ff) > 1 || (i_dp[ff] - ff) < 1) {
+				if ((i_dp[ff] - ff) > 1 || (i_dp[ff] - ff) < -1) {
 					i_dp_flux[ff] = 1;
 				}
 			}
@@ -162,7 +162,7 @@ class slablogger {
 				if (j_dp[ff] == j_toxic) {
 					j_dp_flux[ff] = 1;
 				}
-				if ((j_dp[ff] - ff) > 1 || (j_dp[ff] - ff) < 1) {
+				if ((j_dp[ff] - ff) > 1 || (j_dp[ff] - ff) < -1) {
 					j_dp_flux[ff] = 1;
 				}
 			}
